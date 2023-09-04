@@ -11,9 +11,13 @@ type TransactionsProps = { transactions: Transaction[] | null }
 type TransactionPaneProps = {
   transaction: Transaction
   loading: boolean
+  checked: boolean
+  id: string
+  onChange: (newValue: any) => Promise<void>
   approved?: boolean
-  setTransactionApproval: SetTransactionApprovalFunction
+  setTransactionApproval?: SetTransactionApprovalFunction
 }
 
 export type TransactionsComponent = FunctionComponent<TransactionsProps>
 export type TransactionPaneComponent = FunctionComponent<TransactionPaneProps>
+export type ApprovedState = { [key: string]: boolean }

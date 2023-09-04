@@ -21,7 +21,11 @@ export const getTransactionsPaginated = ({
   page,
 }: PaginatedRequestParams): PaginatedResponse<Transaction[]> => {
   if (page === null) {
-    throw new Error("Page cannot be null")
+    alert("No more data to view...")
+    return {
+      nextPage: null,
+      data: [],
+    }
   }
 
   const start = page * TRANSACTIONS_PER_PAGE
@@ -41,7 +45,7 @@ export const getTransactionsPaginated = ({
 
 export const getTransactionsByEmployee = ({ employeeId }: RequestByEmployeeParams) => {
   if (!employeeId) {
-    throw new Error("Employee id cannot be empty")
+    return data.transactions
   }
 
   return data.transactions.filter((transaction) => transaction.employee.id === employeeId)

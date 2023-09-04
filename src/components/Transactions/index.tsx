@@ -1,10 +1,12 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { useCustomFetch } from "src/hooks/useCustomFetch"
 import { SetTransactionApprovalParams } from "src/utils/types"
 import { TransactionPane } from "./TransactionPane"
+import { ApprovedState } from "./types"
 import { SetTransactionApprovalFunction, TransactionsComponent } from "./types"
 
 export const Transactions: TransactionsComponent = ({ transactions }) => {
+  const [approved, setApproved] = useState<ApprovedState>({})
   const { fetchWithoutCache, loading } = useCustomFetch()
 
   const setTransactionApproval = useCallback<SetTransactionApprovalFunction>(
@@ -26,9 +28,20 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
       {transactions.map((transaction) => (
         <TransactionPane
           key={transaction.id}
+          id={transaction.id}
           transaction={transaction}
           loading={loading}
-          setTransactionApproval={setTransactionApproval}
+          checked={approved ? approved[transaction.id] : transaction.approved}
+          onChange={async (newValue: any) => {
+            await setTransactionApproval({
+              transactionId: transaction.id,
+              newValue,
+            })
+            setApproved({
+              ...approved,
+              ...(approved ? { [transaction.id]: !approved[transaction.id] } : null),
+            })
+          }}
         />
       ))}
     </div>

@@ -7,12 +7,12 @@ export const InputCheckbox: InputCheckboxComponent = ({ id, checked = false, dis
 
   return (
     <div className="RampInputCheckbox--container" data-testid={inputId}>
-      <label
+      {/* <label
         className={classNames("RampInputCheckbox--label", {
           "RampInputCheckbox--label-checked": checked,
           "RampInputCheckbox--label-disabled": disabled,
         })}
-      />
+      /> */}
       <input
         id={inputId}
         type="checkbox"
